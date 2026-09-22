@@ -12,18 +12,27 @@
 <body>
 <div class="topbar"><div class="wrap"><span>School of Biomedical Sciences · The University of Hong Kong</span><span>Fan Lab / HKU</span></div></div>
 <nav class="nav"><div class="wrap"><a class="brand" href="index.html"><i class="mark">F</i><div><strong>Fan Laboratory</strong><span>Epigenetics · Stem Cells · Neural Biology</span></div></a><div class="navlinks"><a href="index.html">Home</a><a href="index.html#research">Research</a><a href="index.html#publications">Publications</a><a href="members.html">Members</a><a href="index.html#join">Join us</a></div></div></nav>
-<header class="hero"><div class="wrap"><div class="kicker">Fan Lab / Current members</div><h1>The people behind the questions.</h1><p>Our laboratory brings together researchers working across epigenetics, neural development, stem-cell biology and translational medicine.</p></div></header>
 <main>
 <section class="section"><div class="wrap"><div class="kicker">01 / Principal investigator</div><h2>Lab leadership</h2><div class="director"><img class="portrait" src="https://www.sbms.hku.hk/sites/default/files/styles/detailed_profile/public/2025-11/Fan_Guoping.png?itok=ZjhXkhTQ" alt="Professor Guoping Fan at the University of Hong Kong"><div><div class="role">Principal Investigator · Professor</div><h3>Guoping Fan, PhD</h3><p>Professor Fan leads the Fan Laboratory at the School of Biomedical Sciences, The University of Hong Kong. His research focuses on epigenetic mechanisms in neural stem-cell differentiation, adult brain function, somatic reprogramming and disease modeling.</p><p><strong>Research interests:</strong> DNA methylation, neural stem cells and organoids, animal models of human disease, and mRNA delivery technology.</p><a class="btn" href="https://www.sbms.hku.hk/staff/guoping-fan" target="_blank" rel="noreferrer">Full HKU profile</a></div></div></div></section>
-<section class="section alt"><div class="wrap"><div class="kicker">02 / Current members</div><h2>Our research team</h2><div class="member-grid">
-<article class="member"><div class="member-avatar avatar-empty" aria-label="Photo unavailable"></div><div class="role">PhD Student · 2026 entry</div><h3>SUN QIREN</h3><p>Doctoral researcher in the Fan Laboratory.</p></article>
-<article class="member"><div class="member-avatar avatar-empty" aria-label="Photo unavailable"></div><div class="role">PhD Student · 2026 entry</div><h3>MADANBAO</h3><p>Doctoral researcher in the Fan Laboratory.</p></article>
-<article class="member"><div class="member-avatar avatar-empty" aria-label="Photo unavailable"></div><div class="role">PhD Student · 2024 entry</div><h3>LIU HUI</h3><p>Doctoral researcher in the Fan Laboratory.</p></article>
-<article class="member"><div class="member-avatar avatar-empty" aria-label="Photo unavailable"></div><div class="role">Senior Technical Officer</div><h3>ZHOU YUAN</h3><p>Technical support for the Fan Laboratory.</p></article>
-<article class="member"><img class="member-avatar" src="https://avatars.githubusercontent.com/u/331932399?v=4" alt="PENG WEN QING GitHub avatar"><div class="role">Intern Student · 2026.06–2026.12</div><h3>PENG WEN QING</h3><p>Intern student in the Fan Laboratory.</p><a class="github-link" href="https://github.com/CallumPeng" target="_blank" rel="noreferrer">GitHub ↗</a></article>
-</div></div></section>
+<section class="section alt"><div class="wrap"><div class="kicker">02 / Current members</div><h2>Our research team</h2><div class="member-grid" id="member-grid"><p>Loading current members…</p></div></div></section>
 <section class="section contact"><div class="wrap"><div class="kicker">03 / Join us</div><h2>Interested in joining Fan Lab?</h2><p>We welcome motivated researchers interested in epigenetics, neural biology, stem-cell technology and therapeutic applications.</p><a class="btn" href="mailto:gfan@hku.hk">Contact Professor Fan</a></div></section>
 </main>
 <footer class="footer"><div class="wrap"><span>© Fan Laboratory · The University of Hong Kong</span><span><a href="index.html">Back to home</a></span></div></footer>
+<script>
+const grid = document.querySelector('#member-grid');
+fetch('members.json')
+  .then(response => {
+    if (!response.ok) throw new Error('Unable to load members');
+    return response.json();
+  })
+  .then(members => {
+    grid.innerHTML = members.map(member => `<article class="member">
+      ${member.avatar ? `<img class="member-avatar" src="${member.avatar}" alt="${member.name} GitHub avatar">` : '<div class="member-avatar avatar-empty" aria-label="Photo unavailable"></div>'}
+      <div class="role">${member.role}</div><h3>${member.name}</h3><p>${member.bio}</p>
+      ${member.github ? `<a class="github-link" href="${member.github}" target="_blank" rel="noreferrer">GitHub ↗</a>` : ''}
+    </article>`).join('');
+  })
+  .catch(() => { grid.innerHTML = '<p>Member information is temporarily unavailable.</p>'; });
+</script>
 </body>
 </html>
